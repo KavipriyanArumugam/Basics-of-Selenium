@@ -1,0 +1,25 @@
+	FileInputStream inputStream=new FileInputStream(new File("E:\\selenium work\\New folder\\Output_of_ADMPsingleuser.xlsx"));
+		XSSFWorkbook workbook=new XSSFWorkbook(inputStream);
+		XSSFSheet sheet=workbook.getSheetAt(0);
+		int rowcount=sheet.getLastRowNum();
+		//System.out.println(rowcount);
+		int j=1;
+		while(j<rowcount+1) {
+			XSSFRow row=sheet.getRow(j++);
+			XSSFCellStyle style=workbook.createCellStyle();
+			XSSFCell cell=row.getCell(17);
+			String testcase=cell.getStringCellValue();
+			if(testcase.equals("Test Passed")) 
+			{
+				style.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+			}
+			else
+			{
+				style.setFillForegroundColor(IndexedColors.RED.getIndex());
+			}
+			style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			cell.setCellStyle(style);
+		}
+		FileOutputStream fileOutputStream=new FileOutputStream("E:\\selenium work\\New folder\\Output_of_ADMPsingleuser.xlsx");
+		workbook.write(fileOutputStream);
+		System.out.println("test case color Done!");
